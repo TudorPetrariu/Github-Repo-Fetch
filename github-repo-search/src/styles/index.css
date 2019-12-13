@@ -1,0 +1,32 @@
+body {
+  background: #387bc9;
+}
+
+.nav-wrapper {
+  background: #88b0df;
+}
+
+.test {
+  background-color: red;
+  width: 300px;
+  height: 300px;
+}
+
+.card-image {
+  max-width: 10%;
+  border-radius: 30px;
+}
+
+.badge {
+  float: right;
+}
+
+.collection.with-header .collection-item {
+  color: #161b1b;
+}
+
+.collapsible .collection-item span.badge {
+  min-width: 15%;
+  border-radius: 20px;
+}
+/*# sourceMappingURL=index.css.map */
