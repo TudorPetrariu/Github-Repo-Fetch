@@ -34,8 +34,8 @@ export const fetchRepos = repoName => {
         })
             .then((json) => {
                 console.log(json);
-                dispatch(fetchRepoSucces(json.items.slice(0, 10)));
-
+                dispatch(fetchRepoSucces(json.items.slice(0, 10)))
+                    ;
             })
             .catch((error) => {
                 console.log(error);

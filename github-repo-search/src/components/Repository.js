@@ -1,31 +1,26 @@
 import React, { Component } from 'react'
 import M from 'materialize-css'
+const ms = require('pretty-ms')
 
 const TOKEN_KEY = process.env.REACT_APP_GITHUB_API_KEY
 
-export class Repository extends Component {
+class Repository extends Component {
 
     constructor(props) {
-
         super(props);
-
         this.state = {
             readme: null,
             usedLanguage: {},
             userRepos: [],
             repoIssues: []
+
         }
     }
 
-
-
-
     componentDidMount() {
-
         this.getReadmeInfo()
         let collapsible = document.querySelectorAll('.collapsible');
         M.Collapsible.init(collapsible);
-
     }
 
     async fetchRepoAssets(url, options) {
@@ -37,48 +32,46 @@ export class Repository extends Component {
             .then(json => json)
     }
 
-
-
-
     async  getReadmeInfo() {
-
         const { repo } = this.props;
         const userReposUrl = repo.owner.repos_url
         const readmeUrl = repo.contents_url.replace(`{+path}`, `README.md`);
         const repoIssuesUrl = repo.issues_url.replace(`{/number}`, '');
         const usedLanguagesUrl = repo.languages_url
-
         const headers = { 'Authorization': `Token ${ TOKEN_KEY } ` }
         const options = {
             'method': 'GET',
             'headers': headers
         }
+
         try {
+            // this.props.startTimer()
+
             let promisses = await Promise.all([
                 this.fetchRepoAssets(readmeUrl, options),
                 this.fetchRepoAssets(userReposUrl, options),
                 this.fetchRepoAssets(repoIssuesUrl, options),
-                this.fetchRepoAssets(usedLanguagesUrl, options)
+                this.fetchRepoAssets(usedLanguagesUrl, options),
             ])
 
             this.setState({
                 readme: promisses[0],
                 userRepos: promisses[1],
                 repoIssues: promisses[2],
-                usedLanguage: promisses[3]
+                usedLanguage: promisses[3],
 
             })
 
-            console.log(this.state)
         } catch (error) {
             console.log(error);
         }
     }
 
+
     render() {
+
         const { repo } = this.props
         const { usedLanguage, userRepos, readme, repoIssues } = this.state
-
 
         return (
             <div className="container" key={repo.owner.id}>
@@ -94,6 +87,9 @@ export class Repository extends Component {
                                     </div>
 
                                 </li>
+                                <h3>timer: {ms(this.props.time)}</h3>
+
+
                                 <li>
                                     <div className="collapsible-header"><i className="material-icons">folder_open</i>Repository Info</div>
                                     <div className="collapsible-body">   <a href="#!" className="collection-item"><span className="badge"> {repo.owner.type}</span>{repo.owner.login}</a>
@@ -109,7 +105,6 @@ export class Repository extends Component {
                                     </div>
                                 </li>
 
-
                                 <li>
                                     <div className="collapsible-header"><i className="material-icons">language</i>Languages Used</div>
                                     <div className="collapsible-body">
@@ -118,8 +113,6 @@ export class Repository extends Component {
                                         </div>
                                     </div>
                                 </li>
-
-
                                 <li>
                                     <div className="collapsible-header"><i className="material-icons">error_outline</i>Issues Details</div>
                                     <div className="collapsible-body">
