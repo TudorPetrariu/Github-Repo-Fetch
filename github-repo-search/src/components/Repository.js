@@ -1,18 +1,21 @@
 import React, { Component } from 'react'
+import moment from 'moment';
+import { connect } from 'react-redux'
+
 import M from 'materialize-css'
 const ms = require('pretty-ms')
-
-const TOKEN_KEY = process.env.REACT_APP_GITHUB_API_KEY
 
 class Repository extends Component {
 
     constructor(props) {
         super(props);
+
         this.state = {
             readme: null,
             usedLanguage: {},
             userRepos: [],
-            repoIssues: []
+            repoIssues: [],
+            timer: 0
 
         }
     }
@@ -33,19 +36,22 @@ class Repository extends Component {
     }
 
     async  getReadmeInfo() {
+        let { token } = this.props
+        console.log(this.props)
         const { repo } = this.props;
         const userReposUrl = repo.owner.repos_url
         const readmeUrl = repo.contents_url.replace(`{+path}`, `README.md`);
         const repoIssuesUrl = repo.issues_url.replace(`{/number}`, '');
         const usedLanguagesUrl = repo.languages_url
-        const headers = { 'Authorization': `Token ${ TOKEN_KEY } ` }
+        console.log(token)
+        const headers = { 'Authorization': `Token ${ token } ` }
         const options = {
             'method': 'GET',
             'headers': headers
         }
 
         try {
-            // this.props.startTimer()
+            let startTime = new Date().getTime();
 
             let promisses = await Promise.all([
                 this.fetchRepoAssets(readmeUrl, options),
@@ -54,11 +60,13 @@ class Repository extends Component {
                 this.fetchRepoAssets(usedLanguagesUrl, options),
             ])
 
+            let stopTime = new Date().getTime()
             this.setState({
                 readme: promisses[0],
                 userRepos: promisses[1],
                 repoIssues: promisses[2],
                 usedLanguage: promisses[3],
+                timer: stopTime - startTime
 
             })
 
@@ -69,26 +77,32 @@ class Repository extends Component {
 
 
     render() {
+        const { t } = this.props;
+
 
         const { repo } = this.props
         const { usedLanguage, userRepos, readme, repoIssues } = this.state
 
         return (
+
             <div className="container" key={repo.owner.id}>
                 <div className="card">
+
                     <div className="card-content">
                         <div className="collection with-header">
                             <ul className="collapsible popout">
-                                <li className="collection-header">
-                                    <h5>{repo.full_name}</h5>
-                                    <span className='flow-text'> {repo.description}</span>
-                                    <div className='card-image'>
-                                        <img src={repo.owner.avatar_url} alt="avatar" />
+                                <div className="header">
+
+
+                                    <div className='avatar'>
+                                        <div>{repo.full_name}</div>
+                                        <div>
+                                            <img src={repo.owner.avatar_url} alt="avatar" />
+                                        </div>
                                     </div>
+                                    <span className='flow-text'> {repo.description}</span>
 
-                                </li>
-                                <h3>timer: {ms(this.props.time)}</h3>
-
+                                </div>
 
                                 <li>
                                     <div className="collapsible-header"><i className="material-icons">folder_open</i>Repository Info</div>
@@ -98,8 +112,10 @@ class Repository extends Component {
                                         <a href="#!" className="collection-item"><span className="badge">{repo.watchers}</span> Watchers</a>
                                         <a href="#!" className="collection-item"><span className="badge">{repo.stargazers_count}</span>Stargazers  </a>
                                         <a href="#!" className="collection-item"><span className="badge">{repo.open_issues}</span> Issues </a>
-                                        <a href="#!" className="collection-item"><span className="badge">{repo.created_at}</span> Created </a>
-                                        <a href="#!" className="collection-item"><span className="badge">{repo.updated_at}</span> Updated </a>
+                                        <a href="#!" className="collection-item"><span className="badge">{moment(repo.created_at).calendar()}</span> Created </a>
+
+
+                                        <a href="#!" className="collection-item"><span className="badge">{moment(repo.updated_at).calendar()}</span> Updated </a>
 
 
                                     </div>
@@ -121,10 +137,10 @@ class Repository extends Component {
 
                                                 <div key={i} className="collection-header">
                                                     <a href="!#" className="collection-item">{repoIssues[issue].title}</a>
-                                                    <a className="badge white-text orange">Created at :{repoIssues[issue].created_at}</a>
-                                                    <a className="badge white-text green">Updated at :{repoIssues[issue].updated_at}</a>
                                                     <a className="badge white-text red">Comments : {repoIssues[issue].comments}</a>
-                                                    <a className='collection-item'>Message : {repoIssues[issue].body}</a>
+                                                    <a className="badge white-text green">Updated : {moment(repoIssues[issue].updated_at).calendar()}</a>
+                                                    <a className="badge white-text orange">Created: {moment(repoIssues[issue].created_at).calendar()}</a>
+                                                    <a id='issue-message' className='collection-item'>Message : {repoIssues[issue].body}(</a>
                                                 </div>)}
                                         </div>
                                     </div>
@@ -138,7 +154,7 @@ class Repository extends Component {
                                                     <a href="!#" className='collection-item'> {userRepos[value].name}
                                                         <span className="badge white-text red">Watchers : {userRepos[value].watchers} </span>
                                                         <span className="badge white-text blue">Forks : {userRepos[value].forks}</span>
-                                                        <span className="badge white-text yellow">Issues : {userRepos[value].open_issues}</span>
+                                                        <span className="badge white-text orange">Issues : {userRepos[value].open_issues}</span>
                                                     </a>
                                                 </div>)}
                                         </div>
@@ -151,15 +167,28 @@ class Repository extends Component {
                                 </li>
                             </ul>
                         </div>
+                        <div className="time">Time Elapsed : {ms(this.state.timer)}</div>
+
                     </div>
+
                 </div>
 
             </div>
-
 
         )
     }
 
 }
 
-export default Repository
+const mapStateToProps = (state) => {
+    return {
+        token: state.token
+    }
+}
+const mapDispatchToProps = dispatch => {
+    return {
+        // getToken: (token) => dispatch(getToken(token))
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Repository)

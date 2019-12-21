@@ -1,17 +1,21 @@
-import React from 'react'
-import Main from './components/Main.js'
-import Header from './components/Header'
-import SignIn from './components/SignIn'
-import 'materialize-css/dist/css/materialize.min.css';
+import React, { Suspense } from 'react'
+import { BrowserRouter, Route } from "react-router-dom";
+const NavBar = React.lazy(() => import('./components/NavBar'))
+const Main = React.lazy(() => import('./components/Main'))
+
 
 function App() {
 
 
   return (
     <div className="App">
-      <Header></Header>
-      <Main></Main>
-      <SignIn></SignIn>
+
+      <BrowserRouter>
+        <Suspense fallback={<div id='lazy-nav'>Getting things ready...</div>}>
+          <Route path='/' component={NavBar} />
+          <Main />
+        </Suspense>
+      </BrowserRouter>
     </div>
   );
 }

@@ -2,23 +2,55 @@ $main-color: rgb(56, 123, 201);
 
 body {
 	background: $main-color;
+	font-family: 'Josefin Sans', sans-serif;
 }
 .nav-wrapper {
 	background: lighten($main-color, 20);
 }
 
-.test {
-	background-color: red;
-	width: 300px;
-	height: 300px;
+.header {
+	border: 2px solid rgb(204, 203, 201);
+	border-radius: 20px;
+	margin: 1% 2%;
+	display: flex;
+	flex-direction: row-reverse;
+	justify-content: space-between;
+	align-items: center;
+	span {
+		margin: 0 2%;
+	}
+	.avatar {
+		display: flex;
+
+		align-items: center;
+		margin-top: 2%;
+		margin: 1% 1%;
+		flex-direction: column-reverse;
+	}
+	img {
+		max-width: 100px;
+		border-radius: 50%;
+	}
 }
 
-.card-image {
-	max-width: 10%;
-	border-radius: 30px;
+.container {
+	.card {
+		border-radius: 15px;
+	}
+
+	.collection {
+		border-style: none;
+	}
 }
+.time {
+	text-align: center;
+}
+
 .badge {
-	float: right;
+	padding: 1px;
+	margin-left: 10%;
+	font-weight: bold;
+	border-radius: 4px;
 }
 
 .collection.with-header .collection-item {
@@ -31,5 +63,62 @@ body {
 			min-width: 15%;
 			border-radius: 20px;
 		}
+	}
+}
+.nav-wrapper {
+	img {
+		height: 60px;
+		border-radius: 10px;
+		margin-left: 100%;
+	}
+}
+input::-webkit-input-placeholder {
+	color: #ffffff;
+}
+input[type=text]:not(.browser-default):focus:not([readonly]),
+textarea.materialize-textarea:focus:not([readonly]) {
+	border-bottom: 1px solid #fcfcfc;
+	color: #efebe9;
+}
+
+li {
+	list-style: none;
+}
+input {
+	color: rgb(255, 255, 255);
+}
+#lazy-nav {
+	color: rgb(255, 255, 255);
+	display: flex;
+	justify-content: center;
+	margin-top: 25%;
+	font-size: 45px;
+}
+#lazy-fetch {
+	color: rgb(255, 255, 255);
+	display: flex;
+	justify-content: center;
+	margin-top: 25%;
+	font-size: 45px;
+}
+.welcome {
+	color: #eceff1;
+	margin-top: 20%;
+	margin-left: 35%;
+	font-size: 40px;
+}
+.collapsible-body {
+	overflow: auto;
+	max-height: 400px;
+	.collection-header {
+		.collection-item {
+			overflow: auto;
+			max-height: 150px;
+		}
+	}
+}
+@media only screen and (max-width: 600px) {
+	body {
+		background-color: lightblue;
 	}
 }

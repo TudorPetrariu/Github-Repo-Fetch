@@ -1,24 +1,72 @@
 body {
   background: #387bc9;
+  font-family: 'Josefin Sans', sans-serif;
 }
 
 .nav-wrapper {
   background: #88b0df;
 }
 
-.test {
-  background-color: red;
-  width: 300px;
-  height: 300px;
+.header {
+  border: 2px solid #cccbc9;
+  border-radius: 20px;
+  margin: 1% 2%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: reverse;
+      -ms-flex-direction: row-reverse;
+          flex-direction: row-reverse;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
 }
 
-.card-image {
-  max-width: 10%;
-  border-radius: 30px;
+.header span {
+  margin: 0 2%;
+}
+
+.header .avatar {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  margin-top: 2%;
+  margin: 1% 1%;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: reverse;
+      -ms-flex-direction: column-reverse;
+          flex-direction: column-reverse;
+}
+
+.header img {
+  max-width: 100px;
+  border-radius: 50%;
+}
+
+.container .card {
+  border-radius: 15px;
+}
+
+.container .collection {
+  border-style: none;
+}
+
+.time {
+  text-align: center;
 }
 
 .badge {
-  float: right;
+  padding: 1px;
+  margin-left: 10%;
+  font-weight: bold;
+  border-radius: 4px;
 }
 
 .collection.with-header .collection-item {
@@ -28,5 +76,76 @@ body {
 .collapsible .collection-item span.badge {
   min-width: 15%;
   border-radius: 20px;
+}
+
+.nav-wrapper img {
+  height: 60px;
+  border-radius: 10px;
+  margin-left: 100%;
+}
+
+input::-webkit-input-placeholder {
+  color: #ffffff;
+}
+
+input[type=text]:not(.browser-default):focus:not([readonly]),
+textarea.materialize-textarea:focus:not([readonly]) {
+  border-bottom: 1px solid #fcfcfc;
+  color: #efebe9;
+}
+
+li {
+  list-style: none;
+}
+
+input {
+  color: white;
+}
+
+#lazy-nav {
+  color: white;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  margin-top: 25%;
+  font-size: 45px;
+}
+
+#lazy-fetch {
+  color: white;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  margin-top: 25%;
+  font-size: 45px;
+}
+
+.welcome {
+  color: #eceff1;
+  margin-top: 20%;
+  margin-left: 35%;
+  font-size: 40px;
+}
+
+.collapsible-body {
+  overflow: auto;
+  max-height: 400px;
+}
+
+.collapsible-body .collection-header .collection-item {
+  overflow: auto;
+  max-height: 150px;
+}
+
+@media only screen and (max-width: 600px) {
+  body {
+    background-color: lightblue;
+  }
 }
 /*# sourceMappingURL=index.css.map */

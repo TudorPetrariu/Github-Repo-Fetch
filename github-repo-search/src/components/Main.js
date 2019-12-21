@@ -1,60 +1,44 @@
-import React, { Component } from 'react'
-
+import React, { Component, Suspense } from 'react'
 import { connect } from 'react-redux'
 import { fetchRepos } from './redux/actions/GitHubAction'
-import Repository from './Repository'
 
+const Repository = React.lazy(() => import('./Repository'))
 
 export class Main extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            searchValue: "",
-            time: 0,
-            isOn: false,
-            start: 0
+            user: ''
         }
+
     }
 
-    startTimer = () => {
-        this.setState({
-            isOn: true,
-            time: this.state.time,
-            start: Date.now() - this.state.time
-        })
-        this.timer = setInterval(() => this.setState({
-            time: Date.now() - this.state.start
-        }), 1);
-    }
 
-    stopTimer = () => {
-        this.setState({ isOn: false })
-        clearInterval(this.timer)
-    }
-    resetTimer = () => {
-        this.setState({ time: 0, isOn: false })
-    }
+
+
 
     render() {
 
+        const { user } = this.props
         const { repositories } = this.props
         const showRepo = repositories.length ? (
+
             repositories.map(repo => {
                 const repoContent = repo.contents_url.replace(`{+path}`, `README.md`)
                 console.log(repoContent)
-                return < Repository repo={repo} key={repo.id} startTimer={this.startTimer} time={this.state.time} resetTimer={this.resetTimer} stopTimer={this.stopTimer} />
-            })
-        ) : (
-                <div>No repos yet</div>
+                return <Suspense
+                    fallback={<div id='lazy-fetch'>Looking for Repository...</div>}>
+                    <Repository repo={repo} key={repo.id} />
+                </Suspense>
+
+            }
             )
+        ) : (!user ? (<div className='welcome'>Sign in with Github and start searching !</div>) : '')
 
         return (
             <div>
-
                 {showRepo}
-
-
             </div>
         )
     }
@@ -62,8 +46,9 @@ export class Main extends Component {
 
 const mapStateToProps = (state) => {
     return {
-
-        repositories: state.repositories
+        user: state.user,
+        repositories: state.repositories,
+        token: state.token
     }
 }
 const mapDispatchToProps = dispatch => {
