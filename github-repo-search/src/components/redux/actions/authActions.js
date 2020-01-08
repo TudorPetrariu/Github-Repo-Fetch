@@ -10,12 +10,6 @@ firebase.initializeApp({
 
 
 
-export const LogInUserRequest = () => {
-    return {
-        type: ' USER_LOGIN_REQUEST'
-    };
-};
-
 export const LogInUserSucces = (user) => {
     return {
         type: 'USER_LOGIN_SUCCES',
@@ -23,12 +17,7 @@ export const LogInUserSucces = (user) => {
     };
 };
 
-export const LogInUserFailure = (error) => {
-    return {
-        type: 'USER_LOGIN_FAILURE',
-        payload: error
-    };
-};
+
 
 export const getToken = (token) => {
     return {

@@ -1,4 +1,4 @@
-import { FETCH_REPO_REQUEST, FETCH_REPO_SUCCES, FETCH_REPO_FAILURE, GET_TOKEN } from '../types';
+import { FETCH_REPO_REQUEST, FETCH_REPO_SUCCES, FETCH_REPO_FAILURE } from '../types';
 
 
 export const initialState = {

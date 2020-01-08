@@ -2,77 +2,58 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { signIn, userIsLoggedIn, signOut } from './redux/actions/authActions'
 import { fetchRepos } from './redux/actions/GitHubAction'
-import Main from './Main'
 
 export class NavBar extends Component {
     constructor(props) {
-
-
         super(props);
-
         this.state = {
             name: '',
-            typing: false,
             typingTimeout: 0,
             user: ''
-
         }
-
     }
 
-    sendFetch = () => {
-        this.props.fetchRepos(this.state.name)
-
+    componentDidMount() {
+        this.props.userIsLoggedIn()
     }
-    inputSearch = (e) => {
+
+    sendFetch = () => this.props.fetchRepos(this.state.name)
+
+    handleSearch = (e) => {
         const that = this;
+
         if (that.state.typingTimeout) {
             clearTimeout(that.state.typingTimeout);
         }
         that.setState({
             name: e.target.value,
-            typing: false,
             typingTimeout: setTimeout(function () {
                 that.sendFetch(that.state.name);
-            }, 500)
+            }, 600)
         });
     }
 
 
     handleLogIn = () => {
-
         this.props.signIn()
-
-    }
-
-    componentDidMount() {
-        this.props.userIsLoggedIn()
-
-
     }
 
     handleLogOut = () => {
-
         this.props.signOut()
         this.setState({
             name: ''
         });
         this.props.fetchRepos(null)
-
     }
 
 
-
     render() {
-
         const { user } = this.props
         const navLinks = user ?
-
-
             <div>
                 <li className='left'>
                     <input className='input-field'
-                        onChange={this.inputSearch}
+                        onChange={this.handleSearch}
                         value={this.state.name}
                         type="text"
                         placeholder="Search repositories..." />
@@ -80,38 +61,28 @@ export class NavBar extends Component {
 
                 <ul className='right'>
                     <li onClick={this.handleLogOut}>
-                        <a>SignOut</a>
+                        <a href='#!'>SignOut</a>
                     </li>
-
-                    <li>
-                        <a href='#' className='left'>{user.displayName}</a>
-                    </li>
-
-                    <li><img src={user.photoURL} /></li>
-
+                    <li className='hide-on-small-only left'>{user.displayName}</li>
+                    <li ><img src={user.photoURL} alt='userImage' /></li>
                 </ul>
             </div>
 
             :
             <div>
                 <ul>
-                    <li className='right' onClick={this.handleLogIn}><a>SignIn</a></li>
+                    <li className='right' onClick={this.handleLogIn}><a href='#!'>SignIn</a></li>
                 </ul>
-                <li className='brand-logo left'><a>Repo Search</a></li>
+                <li className='brand-logo left'><a href='#!'>Repo Search</a></li>
             </div>
 
         return (
             <div>
                 <nav className='nav-wrapper'>
                     <div className='container'>
-                        {/* <a href='#' className='brand-logo left'>GitHub Repo</a> */}
-
-
                         {navLinks}
-
                     </div>
                 </nav>
-                {/* <Main /> */}
             </div>
         )
     }

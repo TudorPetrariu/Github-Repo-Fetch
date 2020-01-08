@@ -4,121 +4,189 @@ body {
 	background: $main-color;
 	font-family: 'Josefin Sans', sans-serif;
 }
-.nav-wrapper {
-	background: lighten($main-color, 20);
-}
 
-.header {
-	border: 2px solid rgb(204, 203, 201);
-	border-radius: 20px;
-	margin: 1% 2%;
-	display: flex;
-	flex-direction: row-reverse;
-	justify-content: space-between;
-	align-items: center;
-	span {
-		margin: 0 2%;
-	}
-	.avatar {
+@media only screen and (min-width: 414px) {
+	.header {
+		border: 5px solid rgb(204, 203, 201);
+		border-radius: 20px;
+		border-top: none;
+		border-bottom: none;
+		margin: 1% 2%;
 		display: flex;
-
+		flex-direction: row-reverse;
+		justify-content: space-between;
 		align-items: center;
-		margin-top: 2%;
-		margin: 1% 1%;
-		flex-direction: column-reverse;
-	}
-	img {
-		max-width: 100px;
-		border-radius: 50%;
-	}
-}
+		span {
+			margin: 0 2%;
+		}
+		.avatar {
+			display: flex;
 
-.container {
-	.card {
-		border-radius: 15px;
-	}
-
-	.collection {
-		border-style: none;
-	}
-}
-.time {
-	text-align: center;
-}
-
-.badge {
-	padding: 1px;
-	margin-left: 10%;
-	font-weight: bold;
-	border-radius: 4px;
-}
-
-.collection.with-header .collection-item {
-	color: rgb(22, 27, 27);
-}
-
-.collapsible {
-	.collection-item {
-		span.badge {
-			min-width: 15%;
-			border-radius: 20px;
+			align-items: center;
+			margin-top: 2%;
+			margin: 1% 1%;
+			flex-direction: column-reverse;
+		}
+		img {
+			max-width: 100px;
+			border-radius: 50%;
 		}
 	}
-}
-.nav-wrapper {
-	img {
-		height: 60px;
-		border-radius: 10px;
-		margin-left: 100%;
-	}
-}
-input::-webkit-input-placeholder {
-	color: #ffffff;
-}
-input[type=text]:not(.browser-default):focus:not([readonly]),
-textarea.materialize-textarea:focus:not([readonly]) {
-	border-bottom: 1px solid #fcfcfc;
-	color: #efebe9;
-}
 
-li {
-	list-style: none;
-}
-input {
-	color: rgb(255, 255, 255);
-}
-#lazy-nav {
-	color: rgb(255, 255, 255);
-	display: flex;
-	justify-content: center;
-	margin-top: 25%;
-	font-size: 45px;
-}
-#lazy-fetch {
-	color: rgb(255, 255, 255);
-	display: flex;
-	justify-content: center;
-	margin-top: 25%;
-	font-size: 45px;
-}
-.welcome {
-	color: #eceff1;
-	margin-top: 20%;
-	margin-left: 35%;
-	font-size: 40px;
-}
-.collapsible-body {
-	overflow: auto;
-	max-height: 400px;
-	.collection-header {
+	.container {
+		.card {
+			border-radius: 15px;
+		}
+
+		.collection {
+			border-style: none;
+		}
+	}
+	.time {
+		text-align: center;
+	}
+
+	.badge {
+		padding: 1px;
+		margin-left: 10%;
+		font-weight: bold;
+		border-radius: 4px;
+	}
+
+	.collection.with-header .collection-item {
+		color: rgb(22, 27, 27);
+	}
+
+	.collapsible {
 		.collection-item {
+			span.badge {
+				min-width: 15%;
+				border-radius: 20px;
+			}
+		}
+	}
+	.nav-wrapper {
+		margin-bottom: 10%;
+		background: lighten($main-color, 20);
+		padding: 2px;
+
+		img {
+			height: 60px;
+			border-radius: 10px;
+			margin-left: 100%;
+		}
+	}
+	input::-webkit-input-placeholder {
+		color: #ffffff;
+	}
+	input[type=text]:not(.browser-default):focus:not([readonly]),
+	textarea.materialize-textarea:focus:not([readonly]) {
+		border-bottom: 1px solid #fcfcfc;
+		color: #efebe9;
+	}
+
+	li {
+		list-style: none;
+	}
+	input {
+		color: rgb(255, 255, 255);
+	}
+	#lazy-nav {
+		color: rgb(255, 255, 255);
+		display: flex;
+		justify-content: center;
+		margin-top: 25%;
+		font-size: 45px;
+	}
+	#lazy-fetch {
+		color: rgb(255, 255, 255);
+		display: flex;
+		justify-content: center;
+		margin-top: 25%;
+		font-size: 45px;
+	}
+	.welcome {
+		margin-top: 20%;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		color: #eceff1;
+		font-size: 40px;
+	}
+	.collapsible-body {
+		#issue-title {
+			color: rgb(214, 54, 54);
+			span {
+				min-width: 60%;
+			}
+		}
+		overflow: auto;
+		max-height: 350px;
+		.collection-header {
 			overflow: auto;
 			max-height: 150px;
 		}
 	}
 }
-@media only screen and (max-width: 600px) {
+
+@media only screen and (max-width: 414px) {
+	#user-repository-title {
+		display: flex;
+		flex-direction: column;
+		span {
+			max-width: 50%;
+		}
+
+		justify-content: flex-start;
+		font-size: 15px;
+		color: rgb(55, 126, 207);
+		font-weight: bold;
+	}
+	#repo-info > div.collapsible-body {
+		margin-left: -50px;
+	}
+
+	.collection-header {
+		#issue-title {
+			color: rgb(214, 54, 54);
+			font-weight: bold;
+			text-align: center;
+		}
+		.collection-item {
+			.badge {
+				width: 100%;
+			}
+		}
+	}
 	body {
-		background-color: lightblue;
+		.nav-wrapper {
+			margin-bottom: 10%;
+			.brand-logo {
+				font-size: 1.2em;
+			}
+			img {
+				margin-left: 20%;
+				border-radius: 20px;
+				height: 50px;
+				width: 50px;
+			}
+		}
+
+		.welcome {
+			font-size: 1em;
+			margin: 50% 15%;
+		}
+	}
+
+	.collection a.collection-item {
+		background-color: lighten(#eceff1, 10);
+		border-radius: 10px;
+		span {
+			min-width: 40px;
+		}
+	}
+	nav {
+		background: lighten($main-color, 20);
+		list-style: none;
 	}
 }

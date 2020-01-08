@@ -1,5 +1,4 @@
-import { FETCH_REPO_REQUEST, FETCH_REPO_SUCCES, FETCH_REPO_FAILURE, GET_TOKEN } from '../types';
-// const TOKEN_KEY = process.env.REACT_APP_GITHUB_API_KEY
+import { FETCH_REPO_REQUEST, FETCH_REPO_SUCCES, FETCH_REPO_FAILURE } from '../types';
 
 export const fetchRepoRequest = () => {
     return {
@@ -36,16 +35,13 @@ export const fetchRepos = (repoName) => {
             }).then((res) => {
                 console.log(res);
                 return res.json();
-            })
-                .then((json) => {
-                    console.log(json);
-                    dispatch(fetchRepoSucces(json.items.slice(0, 10)))
-                        ;
-                })
-                .catch((error) => {
-                    console.log(error);
-                    dispatch(fetchRepoFailure(error.message));
-                });
+            }).then((json) => {
+                console.log(json);
+                dispatch(fetchRepoSucces(json.items));
+            }).catch((error) => {
+                console.log(error);
+                dispatch(fetchRepoFailure(error.message));
+            });
         }
     };
 };
@@ -55,7 +51,6 @@ export const fetchRepoAssets = async (url, options) => {
         .then(response => {
             if (response.status === 200)
                 return response.json()
-        })
-        .then(json => json)
+        }).then(json => json)
 }
 
